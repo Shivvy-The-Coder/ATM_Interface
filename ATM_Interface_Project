@@ -1,0 +1,229 @@
+import java.util.*;
+class ATM
+{ private int balance;
+  private final int balancecopy;
+  private int Key;
+  ArrayList<String> data= new ArrayList<>();
+  ArrayList<Integer> value= new ArrayList<>();
+    ATM ( )
+        {
+            this.balance= (int)(Math.random() * 1000) + 10000;
+            this.balancecopy=balance;
+            this.Key=6757;
+        }
+    float ShowBalance()
+        {
+            return balance;
+        }
+    float withdraw()
+        {
+            int withdrawAmount=selectWithDrawDenominations();
+            balance-=withdrawAmount;
+            return balance;
+        }
+
+    void displayInfo()
+    {
+        System.out.println("***********************************************************************************");
+        System.out.println("*   (1). ₹2000                                 (2).₹500                           *");
+        System.out.println("*   (3). ₹200                                  (4).₹100                           *");
+        System.out.println("*                                                                                 *");
+        System.out.println("*   (0) To exit                                (5) Go to Main Menu                *");
+        System.out.println("*                                                                                 *");
+        System.out.println("***********************************************************************************");
+
+        System.out.println("              USE THE KEYS ASSIGNED TO NAVIGATE THROUGH THE MENU ");
+    }
+    int selectWithDrawDenominations()
+            {
+                Scanner sc = new Scanner(System.in);
+                System.out.println("Enter TOTAL Amount of Cash YOu want :");
+                System.out.println("This Machine contains NOtes in ");
+                displayInfo();
+                int x;
+                int total=0;
+                while(true)
+                {
+                    x=sc.nextInt();
+                    if(x==0||x==5)
+                        break;
+                    int inp=0;
+                    switch(x)
+                    {
+                        case 1:
+                            inp=2000;
+                            break;
+                        case 2:
+                            inp=500;
+                            break;
+                        case 3:
+                            inp=200;
+                            break;
+                        case 4:
+                            inp=100;
+                            break;
+                        default:
+                            System.out.println("Enter a Valid Option :");
+
+                    }
+                    total+=inp;
+
+            }
+                if(total>balance)
+                {
+                    System.out.println("Insufficient funds ,cannot withdraw "+total);
+                    return 0;
+                }
+                else {
+                    data.add("Withdraw");
+                    value.add(total);
+                    return total;
+                }
+            }
+    float deposit()
+        {
+            int DepositAmount = selectDepositDenominations();
+            balance+=DepositAmount;
+            return balance;
+        }
+    int selectDepositDenominations()
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter TOTAL Amount of Cash YOu want to Deposit:");
+        System.out.println("This Machine will accept Denominations in ");
+        displayInfo();
+        int x;
+        int total=0;
+        while(true)
+        {
+            x=sc.nextInt();
+            if(x==0||x==5)
+                break;
+            int inp=0;
+            switch(x)
+            {
+                case 1:
+                    inp=2000;
+                    break;
+                case 2:
+                    inp=500;
+                    break;
+                case 3:
+                    inp=200;
+                    break;
+                case 4:
+                    inp=100;
+                    break;
+                default:
+                    System.out.println("Enter a valid Option");
+            }
+            total+=inp;
+            System.out.println("Total : ₹ "+total+" inp "+inp);
+
+        }
+        data.add("Deposited");
+        value.add(total);
+        return total;
+    }
+    void ChangePin()
+    { int i=3;
+        Scanner sc = new Scanner(System.in);
+        while(i!=0)
+        {
+            System.out.println("Enter the Old PIN ");
+            int oldPin=sc.nextInt();
+            if(oldPin!=Key)
+                {i--;System.out.println("YOU have "+i+" more chance left");}
+            else
+            {
+                System.out.println("Enter THE new PIN ");
+                this.Key=sc.nextInt();
+                break;
+            }
+        }
+    }
+
+    void SlipPrint()
+
+    {
+            System.out.println("         SLIP GENERATED");
+            System.out.println();
+            System.out.println();
+            System.out.println("****************************************");
+            System.out.println("**-------SHIVAM BANK ATM-------------***");
+            System.out.println("****************************************");
+            System.out.println();
+            System.out.println("         Previous Balance "+balancecopy);
+            System.out.println("         ----------------");
+        for(int i=0;i<data.size();i++)
+        {   if(data.get(i).equals("Withdraw"))
+            System.out.println("         "+i+". "+data.get(i)+"     ₹ "+value.get(i));
+            else
+            System.out.println("         "+i+". "+data.get(i)+"    ₹ "+value.get(i));
+        }
+            System.out.println("****************************************");
+            System.out.println("Total Available Balance :  ₹"+ShowBalance());
+            System.out.println("****************************************");
+    }
+    void MainMenuSelect()
+    {   Scanner sc = new Scanner(System.in);
+        while(true)
+        {  System.out.println();
+            MainMenu();
+            System.out.println();
+            System.out.println("Enter the Option");
+            int x = sc.nextInt();
+            if(x==0 ||x==5)
+                break;
+            switch (x)
+            {
+                case 1:
+                    System.out.println("₹ "+ShowBalance());
+                    break;
+                case 2:
+                    float val1 = ShowBalance();
+                    float deposited = deposit();
+                    System.out.println("YOu deposited ₹" + (deposited - val1));
+                    break;
+                case 3:
+                    System.out.println("Enter The 4-DIGIT ATM KEY");
+                    int inp=3;
+                while(inp!=0){
+                    int inpKey = sc.nextInt();
+                    System.out.println(Key);
+                    if (inpKey == Key) {
+                        System.out.println("YOu Withdraw ₹" + (ShowBalance() - withdraw()));break;
+                    }
+                    else {inp--;
+                        System.out.println("Enter he Correct ATM PIN , you have "+inp+"Chance Left");
+                    }
+                }
+                    break;
+                case 4:
+                    ChangePin();
+                    break;
+                default:
+                    System.out.println("Enter a valid Option");
+            }
+        }
+    }
+    void MainMenu()
+    {
+        System.out.println("***********************************************************************************");
+        System.out.println("*   (1). Check Balance                         (2). Deposit Money                 *");
+        System.out.println("*   (3). Withdraw Money                        (4). Reset Pin                     *");
+        System.out.println("*                                                                                 *");
+        System.out.println("*   (0) To exit                                (5) Print Slip                     *");
+        System.out.println("*                                                                                 *");
+        System.out.println("***********************************************************************************");
+    }
+
+}
+public class Main {
+    public static void main(String[] args)
+    {
+        ATM object = new ATM();
+        object.MainMenuSelect();
+        object.SlipPrint();
+    }
+}
