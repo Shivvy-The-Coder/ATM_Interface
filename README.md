@@ -2,4 +2,4 @@
 💻 Just unleashed an ATM simulation program in Java! 💸 Manage your balance, deposit and withdraw with ease, reset your PIN, and get a neat transaction slip. Coding real-world scenarios is where the fun begins! 🌐✨
 
 
-For withdrawing or changinfg new pin, use Default PIN : 6757
+For withdrawing or changing New pin, use Default PIN : 6757
